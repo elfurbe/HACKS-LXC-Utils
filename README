@@ -1,1 +1,7 @@
 HACKS LXC Utils
+
+This is a collection of scripts and the like that support LXC for HACKS at University of Arizona.  This README is hilariously incomplete.
+
+List of utilities:
+
+lxcstat - shows brief cpu/mem stats for all running LXC containers
