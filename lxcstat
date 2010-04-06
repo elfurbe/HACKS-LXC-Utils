@@ -1,11 +1,12 @@
 #!/bin/bash
 
+cgroup_path=`mount | grep cgroup | awk '{print $3}'`
 running_containers=$(for file in `ls /var/lib/lxc`; do lxc-info -n $file | grep RUNNING; done | awk '{print $1}' | sed "s/'//g")
 
 for cont in $running_containers; do 
 	name=$cont
-	cpuusage_ns=`cat /var/local/cgroup/$cont/cpuacct.usage`
-	memusage_bytes=`cat /var/local/cgroup/$cont/memory.usage_in_bytes`
+	cpuusage_ns=`cat $cgroup_path/$cont/cpuacct.usage`
+	memusage_bytes=`cat $cgroup_path/$cont/memory.usage_in_bytes`
 	cpuusage_s=`echo "scale=2;$cpuusage_ns/1000000000"|bc -l`
 	memusage_megs=`echo "scale=2;$memusage_bytes/1024/1024"|bc -l`
 	#echo "$cont - cpu: `cat /var/local/cgroup/$cont/cpuacct.usage` mem: `cat /var/local/cgroup/$cont/memory.usage_in_bytes`"; 
