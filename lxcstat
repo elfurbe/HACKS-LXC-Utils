@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cgroup_path=`mount | grep cgroup | awk '{print $3}'`
+cgroup_path=`awk '/cgroup/ {print $2}' /etc/mtab`
 running_containers=$(for file in `ls /var/lib/lxc`; do lxc-info -n $file | grep RUNNING; done | awk '{print $1}' | sed "s/'//g")
 
 for cont in $running_containers; do 
