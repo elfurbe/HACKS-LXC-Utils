@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CONF=etc/lxc-cluster/nodes.conf
+
+for node in `cat $CONF`; do
+	echo ${node}:
+	ssh root@$node /root/HACKS-LXC-Utils/lxcstat
+done
