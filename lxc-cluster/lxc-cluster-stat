@@ -3,6 +3,12 @@
 CONF=etc/lxc-cluster/nodes.conf
 
 for node in `cat $CONF`; do
-	echo ${node}:
-	ssh root@$node /root/HACKS-LXC-Utils/lxcstat
+	echo -n "${node}: "
+	ping -c 1 $node > /dev/null 2>&1
+	if [ $? == 0 ]; then
+		echo "Online"
+		ssh root@$node /root/HACKS-LXC-Utils/lxcstat
+	else
+		echo "Offline"
+	fi
 done
